@@ -31,14 +31,14 @@ camera.position.z = 5;
 // Initialize the renderer
 const canvas = document.querySelector('canvas.threejs');
 // const renderer = new THREE.WebGLRenderer({ canvas: canvas }); 
-const renderer = new THREE.WebGLRenderer({ canvas }); //both are same
+const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true}); //both are same, antialias: true -> smoother rotation, no lines at the edges while rotation.
 // Without setSize() the renderer don't know the size of the canvas to be rendered.
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 // renderer.render(scene, camera); //commented here to render in the renderloop.
 
 
-// Initialize the orbit controls
+// Initialize the orbit controls // allow camera to orbit around a target.
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true; //if set to true then do controls.update() in renderloop
 // Damping: when you rotate the cube, to make it rotate for sometime rather than stop rotation when the cursor movement is stopped.
