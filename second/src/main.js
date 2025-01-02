@@ -8,22 +8,45 @@ const cubeMaterial = new THREE.MeshBasicMaterial({ color: 'yellow' });
 const cubeMesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
 scene.add(cubeMesh);
 
+// transforming position
+// cubeMesh.position.z = -1;
+// cubeMesh.position.y = 1; // we can actually move the cubeMesh using just the x,y,z properties of position property.
+// But we can also manipulate using vector and copy properties.
+
+// To use vector3 to set the position of the cubeMesh
+// const tempVector = new THREE.Vector3(0, 1, 0);
+// cubeMesh.position.copy(tempVector);
+
+// console.log(cubeMesh); //to see the properties of cubeMesh
+// cubeMesh.scale.x = 2;
+// cubeMesh.scale.set(2,2,1); //this set() method can also be used to set the positions of x,y,z simultaneously.
+
+// Adding axes to understand transformation
+const axesHelper = new THREE.AxesHelper(2);
+scene.add(axesHelper);
+
 // Cameras - Perspective Camera(how we see the real world, if we take a look at the things around us they have depth and we can judge their distance, imagine looking a long road, it will appear to get narrower as it goes furthur into the distance due to perspective). 
 // and Orthographic Camera(removes the sense of perspective)
-
 const camera = new THREE.PerspectiveCamera(35, window.innerWidth/window.innerHeight, 0.1, 200);
 // const aspectRatio = window.innerWidth/window.innerHeight;
 // const camera = new THREE.OrthographicCamera(-1*aspectRatio,1*aspectRatio,1,-1,0.1,200)
 camera.position.z = 5;
+// To find the distance between cubeMesh and the camera
+// console.log(cubeMesh.position.distanceTo(camera.position));
 
 const canvas = document.querySelector('canvas.threejs');
-const renderer = new THREE.WebGLRenderer({ canvas });
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true }); // Antialiasing - software solution
 renderer.setSize(window.innerWidth, window.innerHeight);
 // renderer.render(scene, camera);
 
+// Antialiasing - hardware solution
+// console.log(window.devicePixelRatio); //1.5
+// renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+
+
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
-controls.autoRotate = true;
+// controls.autoRotate = true;
 
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth/window.innerHeight;
